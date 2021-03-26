@@ -186,6 +186,20 @@ def imshow(inp, title, fontsize=30):
     plt.title(title, fontsize=fontsize)
     plt.pause(0.001)
 
+def visualise_images_classified(incorrect_images, labels):
+    """ Concatenates two batches of incorrectly classified images into one tensor and visualises them with titles in a form of grid """
+    
+    # Concatenate images incorrectly classified from first and second batch of test data.
+    incorrect_images_visualise = torch.cat((incorrect_images[0], incorrect_images[1]), 0)
+    # Make it a multiple of 10 for proper grid view
+    total_images_display = 10 * int(incorrect_images_visualise.shape[0]/10) 
+    plt.figure(figsize=[100, 100]) 
+    out = torchvision.utils.make_grid(incorrect_images_visualise[0:total_images_display], nrow=10).cpu()
+    labels_display = torch.cat((labels[0], labels[1]), 0)
+    title = [class_names[x] for x in labels_display[0:total_images_display]]
+  
+    imshow(out, title, 50)
+
 
 def plot_accuracies(num_epochs, train_accuracy, validation_accuracy):
     """ Plots training and validation accuracies with respect to the number of epochs """
