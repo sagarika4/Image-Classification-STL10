@@ -165,7 +165,7 @@ def test(device, dataloaders, model):
             output = model(inputs)
             _, pred = torch.max(output, dim=1)
             correct = pred == labels
-            mask = pred != labels.view(-1)
+            mask = (pred != labels).view(-1)
             incorrect_images.append(inputs[mask])
             pred_classes_incorrect.append(pred[mask])
             pred_classes_correct.append(labels[mask])
@@ -190,10 +190,16 @@ def imshow(inp, title, fontsize=30):
 def plot_accuracies(num_epochs, train_accuracy, validation_accuracy):
     """ Plots training and validation accuracies with respect to the number of epochs """
 
-    plt.plot(np.linspace(1, num_epochs, num_epochs).astype(int), train_accuracy, label="training accuracy")
-    plt.plot(np.linspace(1, num_epochs, num_epochs).astype(int), validation_accuracy, label="validation accuracy")
-    plt.xlabel("Epoch")
-    plt.ylabel("Accuracy")
+    fig, ax = plt.subplots()
+    plt.grid()
+
+    x=np.linspace(1, num_epochs, num_epochs).astype(int)
+    ax.plot(x, train_accuracy, marker='o', markerfacecolor='red', color='blue',markersize=5,linewidth=4, label = "train accuracy")
+    ax.plot(x, validation_accuracy, marker='o', markerfacecolor='red', color='orange',markersize=5,linewidth=4, label = "validation accuracy")
+    ax.set_xlabel("#Epochs")
+    ax.set_ylabel("Accuracy")
+    ax.set_title("Train V/S Test Accuracy")
+
     plt.legend()
     plt.show()
 
