@@ -19,7 +19,7 @@ def show_images_grid(inp, title, fontsize=30):
 	plt.title(title, fontsize=fontsize)
 	plt.pause(0.001)
 
-def prepare_and_get_misclassified_images_data(incorrect_images, pred_classes_incorrect, pred_classes_correct):
+def prepare_and_get_misclassified_images_data(incorrect_images, pred_classes_incorrect, pred_classes_correct, class_names):
 	
 
 	incorrect_images_visualise = torch.cat((incorrect_images[0], incorrect_images[1]), 0)
