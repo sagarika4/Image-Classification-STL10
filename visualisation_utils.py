@@ -19,7 +19,7 @@ def show_images_grid(inp, title, fontsize=30):
 	plt.title(title, fontsize=fontsize)
 	plt.pause(0.001)
 
-def prepare_and_get_misclassified_images_data(incorrect_images, pred_classes_incorrect, pred_classes_correct, class_names):
+def prepare_and_get_misclassified_images_data(incorrect_images, pred_classes_incorrect, pred_classes_correct):
 	
 
 	incorrect_images_visualise = torch.cat((incorrect_images[0], incorrect_images[1]), 0)
@@ -32,7 +32,7 @@ def prepare_and_get_misclassified_images_data(incorrect_images, pred_classes_inc
 
 	return incorrect_images_visualise, pred_classes_incorrect_display, pred_classes_correct_display
 
-def visualise_images_misclassified(incorrect_images_visualise, pred_classes_incorrect_display, pred_classes_correct_display):
+def visualise_images_misclassified(incorrect_images_visualise, pred_classes_incorrect_display, pred_classes_correct_display, class_names):
 
 	plt.figure(figsize=[100, 100]) 
 	out = torchvision.utils.make_grid(incorrect_images_visualise, nrow=10).cpu()
@@ -85,7 +85,7 @@ def get_CAM_inputs(model, incorrect_images_visualise, pred_classes_correct_displ
 	"""
 
 
-	final_layer = model_saved._modules.get('layer4')
+	final_layer = model._modules.get('layer4')
 	activated_features = SaveFeatures(final_layer)
 
 	prediction = model(incorrect_images_visualise)
