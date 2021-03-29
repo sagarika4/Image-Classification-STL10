@@ -13,6 +13,45 @@ import time
 import copy
 import matplotlib.pyplot as plt
 
+class Cutout(object):
+	"""Randomly mask out one or more patches from an image.
+	Args:
+		n_holes (int): Number of patches to cut out of each image.
+		length (int): The length (in pixels) of each square patch.
+	"""
+
+	def __init__(self, n_holes, length):
+		self.n_holes = n_holes
+		self.length = length
+
+	def __call__(self, img):
+		"""
+		Args:
+			img (Tensor): Tensor image of size (C, H, W).
+		Returns:
+			Tensor: Image with n_holes of dimension length x length cut out of it.
+		"""
+		h = img.size(1)
+		w = img.size(2)
+
+		mask = np.ones((h, w), np.float32)
+
+		for n in range(self.n_holes):
+			y = np.random.randint(h)
+			x = np.random.randint(w)
+
+			y1 = np.clip(y - self.length // 2, 0, h)
+			y2 = np.clip(y + self.length // 2, 0, h)
+			x1 = np.clip(x - self.length // 2, 0, w)
+			x2 = np.clip(x + self.length // 2, 0, w)
+
+			mask[y1: y2, x1: x2] = 0.
+
+		mask = torch.from_numpy(mask)
+		mask = mask.expand_as(img)
+		img = img * mask
+
+		return img
 
 def load_dataset(root_path, num_workers, batch_size, cutout_transformation=False, cutout_transformation_length=None):
 	""" Load STL10 datasets into train, validation and test sets. Since the testing data > training data, the validation set is cut out from testing set with 40% split."""
