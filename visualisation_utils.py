@@ -53,7 +53,7 @@ def plot_accuracies(num_epochs, train_accuracy, validation_accuracy):
 	ax.plot(x, validation_accuracy, marker='o', markerfacecolor='red', color='orange',markersize=5,linewidth=4, label = "validation accuracy")
 	ax.set_xlabel("#Epochs")
 	ax.set_ylabel("Accuracy")
-	ax.set_title("Train V/S Test Accuracy")
+	ax.set_title("Train V/S Validation Accuracy")
 
 	plt.legend()
 	plt.show()
