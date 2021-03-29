@@ -11,7 +11,6 @@ import torch.optim as optim
 from torch.optim import lr_scheduler
 import time
 import copy
-import matplotlib.pyplot as plt
 
 class Cutout(object):
 	"""Randomly mask out one or more patches from an image.
