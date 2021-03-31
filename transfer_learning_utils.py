@@ -124,6 +124,11 @@ def train_model(device, dataloaders, model, criterion, optimizer, scheduler, num
 	validation_accuracy = []
 
 	for epoch in range(num_epochs):	
+		# Print resultso of every 5th epoch
+		if epoch % 5 == 0:
+			print('Epoch {}/{}'.format(epoch, num_epochs - 1))
+			print('-' * 10)
+
 		# Each epoch has a training and validation phase
 		for phase in ['train', 'val']:
 			if phase == 'train':
@@ -168,8 +173,6 @@ def train_model(device, dataloaders, model, criterion, optimizer, scheduler, num
 				validation_accuracy.append(epoch_acc)
 
 			if epoch % 5 == 0:
-				print('Epoch {}/{}'.format(epoch, num_epochs - 1))
-				print('-' * 10)
 				print('{} Loss: {:.4f} Acc: {:.4f}'.format(phase, epoch_loss, epoch_acc))
 				print()
 
