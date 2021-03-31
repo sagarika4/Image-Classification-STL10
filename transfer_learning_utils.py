@@ -124,8 +124,9 @@ def train_model(device, dataloaders, model, criterion, optimizer, scheduler, num
 	validation_accuracy = []
 
 	for epoch in range(num_epochs):
-		print('Epoch {}/{}'.format(epoch, num_epochs - 1))
-		print('-' * 10)
+		if epoch % 5 == 0:
+			print('Epoch {}/{}'.format(epoch, num_epochs - 1))
+			print('-' * 10)
 
 		# Each epoch has a training and validation phase
 		for phase in ['train', 'val']:
@@ -169,8 +170,9 @@ def train_model(device, dataloaders, model, criterion, optimizer, scheduler, num
 				train_accuracy.append(epoch_acc)
 			if phase == 'val':
 				validation_accuracy.append(epoch_acc)
-			print('{} Loss: {:.4f} Acc: {:.4f}'.format(
-				phase, epoch_loss, epoch_acc))
+
+			if epoch % 5 == 0:
+				print('{} Loss: {:.4f} Acc: {:.4f}'.format(phase, epoch_loss, epoch_acc))
 
 			# deep copy the model
 			if phase == 'val' and epoch_acc > best_acc:
